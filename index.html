@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA ArenaOS - Stadium Intelligence Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Header Section -->
+        <header class="app-header glass-panel">
+            <div class="logo-section">
+                <!-- SVG Icon representing a stadium and AI brain -->
+                <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="28" height="28" rx="8" fill="url(#gradLogo)" />
+                    <ellipse cx="16" cy="16" rx="9" ry="6" stroke="#ffffff" stroke-width="2" />
+                    <circle cx="16" cy="16" r="3" fill="#00e5ff" />
+                    <path d="M16 4V10M16 22V28M6 16H10M22 16H26" stroke="#ffffff" stroke-dasharray="1 1" />
+                    <defs>
+                        <linearGradient id="gradLogo" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#00e5ff" />
+                            <stop offset="1" stop-color="#8b5cf6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div>
+                    <h1>FIFA ArenaOS</h1>
+                    <span class="logo-badge">Stadium Operations Intelligence</span>
+                </div>
+            </div>
+
+            <div class="header-status-grid">
+                <div class="status-indicator">
+                    <span style="color:var(--text-secondary);">Match:</span>
+                    <span style="font-weight:700;">USA vs MEX (62')</span>
+                </div>
+                <div class="status-indicator">
+                    <span style="color:var(--text-secondary);">Score:</span>
+                    <span style="font-weight:700; color:var(--accent-gold);">2 - 1</span>
+                </div>
+                <div class="status-indicator">
+                    <div id="header-pulse-dot" class="pulse-dot"></div>
+                    <span style="font-weight:600;">System Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Body Workspace Grid -->
+        <div class="dashboard-grid">
+
+            <!-- LEFT COLUMN: Simulations & System Alert Log Stream -->
+            <div class="left-sidebar">
+                
+                <div class="sim-control-panel glass-panel">
+                    <div class="panel-title">
+                        <span>Incident Simulations</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <div class="sim-buttons">
+                        <button class="btn-sim" id="sim-medical-incident">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--accent-red)"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            Medical Incident (Sec 102)
+                        </button>
+                        <button class="btn-sim" id="sim-gate-congestion">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--accent-orange)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            Gate Congestion Surge (Gate C)
+                        </button>
+                        <button class="btn-sim" id="sim-hvac-eco">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--accent-green)"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            HVAC Eco-Save Mode
+                        </button>
+                        <button class="btn-sim" id="sim-evac-trigger" style="border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.05);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--accent-red)"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            Stadium Evacuation Alarm
+                        </button>
+                    </div>
+                </div>
+
+                <div class="event-logger-panel glass-panel">
+                    <div class="panel-title">
+                        <span>Event Stream Activity</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M3 20v-8c0-2.2 1.8-4 4-4h10c2.2 0 4 1.8 4 4v8M3 12h18"/></svg>
+                    </div>
+                    <div class="log-stream" id="log-stream">
+                        <div class="log-item agent">
+                            <span class="log-time">17:30:15</span>
+                            <span class="log-category">agent</span>
+                            <span class="log-text">Cooperative agent grid initialized successfully. Checking active databases.</span>
+                        </div>
+                        <div class="log-item sustainability">
+                            <span class="log-time">17:28:44</span>
+                            <span class="log-category">sustainability</span>
+                            <span class="log-text">Predictive HVAC optimization scheduled. Sectors 100-240 adjusted based on load.</span>
+                        </div>
+                        <div class="log-item transport">
+                            <span class="log-time">17:26:12</span>
+                            <span class="log-category">transport</span>
+                            <span class="log-text">Metro line schedule queried. No delays reported for host city line A.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MIDDLE COLUMN: Workspaces & Tab Content panels -->
+            <div class="main-workspace">
+                
+                <!-- Workspace Tabs -->
+                <div class="workspace-tabs glass-panel">
+                    <button class="tab-btn active" data-tab="operations">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                        Operations Overview
+                    </button>
+                    <button class="tab-btn" data-tab="security">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                        Vision AI & Security
+                    </button>
+                    <button class="tab-btn" data-tab="transport">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="22" height="18" rx="2" ry="2"></rect><line x1="9" y1="21" x2="9" y2="9"></line><line x1="15" y1="21" x2="15" y2="9"></line></svg>
+                        Transport & Flows
+                    </button>
+                    <button class="tab-btn" data-tab="accessibility">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                        Accessibility & Translate
+                    </button>
+                </div>
+
+                <!-- Tab Panel Container -->
+                <div class="tab-content-container">
+                    
+                    <!-- TAB 1: OPERATIONS PANEL -->
+                    <div class="tab-panel active" id="operations-panel">
+                        <div class="operations-layout">
+                            
+                            <!-- Stadium Viewer Map -->
+                            <div class="stadium-viewer glass-panel">
+                                <span class="panel-title" style="align-self:flex-start;">Stadium Sectors Load Map</span>
+                                
+                                <!-- Complex SVG Stadium Graphic -->
+                                <svg class="stadium-grid-map" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Inner Pitch -->
+                                    <rect x="140" y="140" width="120" height="120" rx="60" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="2" />
+                                    <rect x="160" y="170" width="80" height="60" stroke="#10b981" stroke-width="1.5" />
+                                    
+                                    <!-- Seating Sectors (Interactive polygons) -->
+                                    <!-- Sector North 102 -->
+                                    <path id="sector-102" class="map-sector" d="M140 100 L260 100 L300 60 L100 60 Z" fill="#f97316" fill-opacity="0.5" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+                                    <!-- Sector North-East 104 -->
+                                    <path id="sector-104" class="map-sector" d="M260 100 L300 140 L340 100 L300 60 Z" fill="#10b981" fill-opacity="0.5" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+                                    <!-- Sector East 106 -->
+                                    <path id="sector-106" class="map-sector" d="M300 140 L300 260 L340 300 L340 100 Z" fill="#10b981" fill-opacity="0.5" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+                                    <!-- Sector South-East 108 -->
+                                    <path id="sector-108" class="map-sector" d="M300 260 L260 300 L300 340 L340 300 Z" fill="#10b981" fill-opacity="0.5" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+                                    <!-- Sector South 110 -->
+                                    <path id="sector-110" class="map-sector" d="M140 300 L260 300 L300 340 L100 340 Z" fill="#10b981" fill-opacity="0.5" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+                                    <!-- Sector South-West 112 -->
+                                    <path id="sector-112" class="map-sector" d="M100 140 L140 100 L100 60 L60 100 Z" fill="#10b981" fill-opacity="0.5" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+                                    <!-- Sector West 116 (Empty Zone) -->
+                                    <path id="sector-116" class="map-sector" d="M100 140 L100 260 L60 300 L60 100 Z" fill="#10b981" fill-opacity="0.5" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+                                </svg>
+
+                                <div class="occupancy-legend">
+                                    <div class="legend-item"><div class="legend-color" style="background:#10b981;"></div>Optimal Flow</div>
+                                    <div class="legend-item"><div class="legend-color" style="background:#f97316;"></div>Heavy Load</div>
+                                    <div class="legend-item"><div class="legend-color" style="background:#ef4444;"></div>Congestion Critical</div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column of Operations Overview -->
+                            <div class="op-controls-column">
+                                <div class="metric-card glass-panel">
+                                    <div class="metric-header">
+                                        <span>Energy Efficiency Matrix</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                                    </div>
+                                    <div class="metric-body">
+                                        <div class="big-metric-text" id="energy-usage-text">1.25 MW</div>
+                                    </div>
+                                    <div class="metric-footer">
+                                        <span>System Target: 1.0 MW</span>
+                                        <span style="color:var(--accent-green);">Optimal Range</span>
+                                    </div>
+                                </div>
+
+                                <div class="metric-card glass-panel">
+                                    <div class="metric-header">
+                                        <span>Predictive Climate Control (HVAC)</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                    </div>
+                                    <div class="metric-body">
+                                        <div style="text-align:center;">
+                                            <div class="big-metric-text" id="hvac-temp-text">21°C</div>
+                                            <div class="slider-control">
+                                                <input type="range" id="hvac-slider" min="16" max="28" value="21">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="metric-footer">
+                                        <span>Eco-Modulation: Active</span>
+                                        <span>Auto control</span>
+                                    </div>
+                                </div>
+
+                                <div class="metric-card glass-panel" style="grid-column: span 2; height:180px;">
+                                    <div class="metric-header">
+                                        <span>Realtime Fan Load Trend</span>
+                                        <span style="color:var(--accent-fifa); font-size:11px; font-weight:700;">LIVE INFLOW</span>
+                                    </div>
+                                    <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
+                                        <canvas id="ops-chart" style="width:100%; height:130px;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: SECURITY & CAMERA MATRIX -->
+                    <div class="tab-panel" id="security-panel">
+                        <div class="security-layout">
+                            <div class="camera-grid">
+                                
+                                <div class="camera-feed-card">
+                                    <canvas id="cam-1"></canvas>
+                                    <div class="camera-overlay">
+                                        <div class="cam-label">
+                                            <span>CAM-12 (Entrance Gate C)</span>
+                                            <span class="cam-badge">Live</span>
+                                        </div>
+                                        <div class="cam-ai-tags">
+                                            <span class="ai-tag">Crowd Count: 142</span>
+                                            <span class="ai-tag">Turnstile rate: normal</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="camera-feed-card">
+                                    <canvas id="cam-2"></canvas>
+                                    <div class="camera-overlay">
+                                        <div class="cam-label">
+                                            <span>CAM-14 (Concourse Sector B)</span>
+                                            <span class="cam-badge">Live</span>
+                                        </div>
+                                        <div class="cam-ai-tags">
+                                            <span class="ai-tag">Restroom Queue: busy</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="camera-feed-card">
+                                    <canvas id="cam-3"></canvas>
+                                    <div class="camera-overlay">
+                                        <div class="cam-label">
+                                            <span>CAM-18 (Stand Staircase 102)</span>
+                                            <span class="cam-badge">Live</span>
+                                        </div>
+                                        <div class="cam-ai-tags">
+                                            <span class="ai-tag">Stairs Zone: Clear</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="camera-feed-card">
+                                    <canvas id="cam-4"></canvas>
+                                    <div class="camera-overlay">
+                                        <div class="cam-label">
+                                            <span>CAM-22 (North Perimeter)</span>
+                                            <span class="cam-badge">Live</span>
+                                        </div>
+                                        <div class="cam-ai-tags">
+                                            <span class="ai-tag">Transit Zone</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Right column of security panel -->
+                            <div class="security-actions-sidebar">
+                                <div class="incident-list-card glass-panel">
+                                    <div class="panel-title">
+                                        <span>Active AI Alerts</span>
+                                    </div>
+                                    <div class="incident-feed" id="incident-feed">
+                                        <div class="incident-item">
+                                            <div class="incident-header">
+                                                <span style="font-weight:700;">#INC-879: Unattended Bag</span>
+                                                <span class="incident-badge resolved">Resolved</span>
+                                            </div>
+                                            <div style="color:var(--text-secondary); font-size:11px;">Located near Gate D exit. Owner retrieved bag.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: TRANSPORT & CROWD FLOW -->
+                    <div class="tab-panel" id="transport-panel">
+                        <div class="transport-layout">
+                            
+                            <div class="transit-card glass-panel">
+                                <div class="panel-title">
+                                    <span>Metro & Shuttle Schedule</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                                </div>
+                                <div style="display:flex; flex-direction:column;">
+                                    <div class="transit-row">
+                                        <div class="transit-icon-wrap"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 22h16M7 2v13c0 2.2 1.8 4 4 4h2c2.2 0 4-1.8 4-4V2M12 2v17"/></svg></div>
+                                        <div class="transit-name">Metro Line A (Stadium Station)</div>
+                                        <div class="transit-freq">Every 3m</div>
+                                        <div class="transit-status on-time">On Time</div>
+                                    </div>
+                                    <div class="transit-row">
+                                        <div class="transit-icon-wrap"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 22h16M7 2v13c0 2.2 1.8 4 4 4h2c2.2 0 4-1.8 4-4V2M12 2v17"/></svg></div>
+                                        <div class="transit-name">Metro Line B (East Station)</div>
+                                        <div class="transit-freq">Every 5m</div>
+                                        <div class="transit-status delayed">Delayed 4m</div>
+                                    </div>
+                                    <div class="transit-row">
+                                        <div class="transit-icon-wrap"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M9 16v4M15 16v4"/></svg></div>
+                                        <div class="transit-name">Airport Shuttle Express</div>
+                                        <div class="transit-freq">Every 10m</div>
+                                        <div class="transit-status on-time">On Time</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="transit-card glass-panel">
+                                <div class="panel-title">
+                                    <span>Crowd Volatility Forecast</span>
+                                </div>
+                                <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
+                                    <canvas id="transport-chart" style="width:100%; height:130px;"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: ACCESSIBILITY & TRANSLATION -->
+                    <div class="tab-panel" id="accessibility-panel">
+                        <div class="access-layout">
+                            
+                            <!-- Speech-to-speech translator portal -->
+                            <div class="translator-interface glass-panel">
+                                <div>
+                                    <div class="panel-title">
+                                        <span>Agent Translation Portal</span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    </div>
+                                    <span style="font-size:11px; color:var(--text-secondary);">Input volunteer speech at Information Desk:</span>
+                                    <textarea class="voice-input-box" id="translation-input" placeholder="Type or click to speak volunteer input (e.g. 'How can I get to the nearest wheelchair access ramp?')"></textarea>
+                                </div>
+                                
+                                <div class="translator-action-bar">
+                                    <button class="btn-translate" id="btn-translate-action">Speak & Translate</button>
+                                    <span style="font-size:11px; color:var(--accent-purple);">Target: German, Spanish, French</span>
+                                </div>
+                            </div>
+
+                            <div class="translator-interface glass-panel">
+                                <div class="panel-title">
+                                    <span>Synthesized Translations</span>
+                                </div>
+                                <div class="translations-output" id="translations-output">
+                                    <!-- Translated blocks populate here -->
+                                    <div style="text-align:center; color:var(--text-secondary); margin-top:40px; font-size:13px;">
+                                        Waiting for voice input...
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: AI Agent grid showing active/idle status -->
+            <div class="right-sidebar glass-panel">
+                <div class="panel-title">
+                    <span>Cooperative Agents</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </div>
+                
+                <div class="agents-grid">
+                    
+                    <div class="agent-card" id="agent-card-navigation">
+                        <div class="agent-info">
+                            <div class="agent-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+                            <div>
+                                <div class="agent-name">Navigation Agent</div>
+                                <div class="agent-status">Dynamic Wayfinding</div>
+                            </div>
+                        </div>
+                        <span class="agent-badge-status idle">Idle</span>
+                    </div>
+
+                    <div class="agent-card" id="agent-card-transport">
+                        <div class="agent-info">
+                            <div class="agent-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="22" height="18" rx="2" ry="2"></rect><line x1="9" y1="21" x2="9" y2="9"></line></svg></div>
+                            <div>
+                                <div class="agent-name">Transport Agent</div>
+                                <div class="agent-status">Transit Dispatch</div>
+                            </div>
+                        </div>
+                        <span class="agent-badge-status idle">Idle</span>
+                    </div>
+
+                    <div class="agent-card" id="agent-card-emergency">
+                        <div class="agent-info">
+                            <div class="agent-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div>
+                            <div>
+                                <div class="agent-name">Emergency Agent</div>
+                                <div class="agent-status">Evacuation Planning</div>
+                            </div>
+                        </div>
+                        <span class="agent-badge-status idle">Idle</span>
+                    </div>
+
+                    <div class="agent-card" id="agent-card-security">
+                        <div class="agent-info">
+                            <div class="agent-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                            <div>
+                                <div class="agent-name">Security Agent</div>
+                                <div class="agent-status">Risk / Crowd Monitor</div>
+                            </div>
+                        </div>
+                        <span class="agent-badge-status idle">Idle</span>
+                    </div>
+
+                    <div class="agent-card" id="agent-card-medical">
+                        <div class="agent-info">
+                            <div class="agent-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                            <div>
+                                <div class="agent-name">Medical Agent</div>
+                                <div class="agent-status">Triage & Dispatch</div>
+                            </div>
+                        </div>
+                        <span class="agent-badge-status idle">Idle</span>
+                    </div>
+
+                    <div class="agent-card" id="agent-card-crowd">
+                        <div class="agent-info">
+                            <div class="agent-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                            <div>
+                                <div class="agent-name">Crowd Prediction</div>
+                                <div class="agent-status">Flow Modelling</div>
+                            </div>
+                        </div>
+                        <span class="agent-badge-status idle">Idle</span>
+                    </div>
+
+                    <div class="agent-card" id="agent-card-sustainability">
+                        <div class="agent-info">
+                            <div class="agent-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                            <div>
+                                <div class="agent-name">Sustainability Agent</div>
+                                <div class="agent-status">Waste & HVAC Optimization</div>
+                            </div>
+                        </div>
+                        <span class="agent-badge-status idle">Idle</span>
+                    </div>
+
+                    <div class="agent-card" id="agent-card-energy">
+                        <div class="agent-info">
+                            <div class="agent-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                            <div>
+                                <div class="agent-name">Energy Optimizer</div>
+                                <div class="agent-status">Grid Load Balancing</div>
+                            </div>
+                        </div>
+                        <span class="agent-badge-status idle">Idle</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- COOPERATIVE AGENT REASONING DIALOG OVERLAY -->
+    <div class="agent-coop-popup glass-panel" id="agent-coop-popup">
+        <div class="coop-header">
+            <div class="coop-title">
+                <span class="pulse-dot"></span>
+                <span>Cooperative Agent Reasoning Pipeline</span>
+            </div>
+            <button class="btn-close-coop" id="btn-close-coop">&times;</button>
+        </div>
+        <div class="coop-body" id="coop-steps">
+            <!-- Simulated cooperative pipeline steps -->
+        </div>
+    </div>
+
+    <!-- EVACUATION FULLSCREEN MODAL -->
+    <div class="evac-overlay" id="evac-overlay">
+        <div class="evac-modal glass-panel">
+            <div class="evac-icon">&#9888;</div>
+            <h1 class="evac-h1">Emergency Evacuation Active</h1>
+            <p class="evac-desc">
+                FIFA ArenaOS Emergency Agent has initiated structural evacuation plan EVAC-2026-F. 
+                Dynamic directional arrows in concourses have activated. Evacuation guidelines pushed to all volunteer mobile headsets.
+                Local emergency services routed to Gates A, B, and D.
+            </p>
+            <button class="btn-evac-dismiss" id="btn-evac-dismiss">Dismiss Simulator Alarm</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
